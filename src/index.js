@@ -1,28 +1,17 @@
 import callHistory from './callHistory.json';
 import styles from './scss/main.scss';
-import * as moment from 'moment';
-
-// document.getElementById('content').innerText = JSON.stringify(callHistory);
+import formatTimestamp from './time';
 
 class ContactsWidget {
-    constructor(contacts) {
+    constructor(callLogs) {
         this.root = document.querySelector('section');
-        this.render(this.sortContacts(this.extractContactsFromHistory(contacts)));
+        this.render(this.sortContacts(this.extractContactsFromHistory(callLogs)));
     }
 
-    render(contacts) {
-        this.root.innerHTML = '';
-        contacts.forEach(contact => {
-            const dateObj = this.formatTimestamp(contact.lastCalled);
-            this.root.innerHTML += this.getRowHTML(contact, dateObj);
-        });
-        this.addRowEvents();
-    }
-
-    extractContactsFromHistory(callHistory) {
+    extractContactsFromHistory(callLogs) {
         const contacts = new Map();
 
-        callHistory.forEach(call => {
+        callLogs.forEach(call => {
             if (!contacts.get(call.phoneNumber)) {
                 const { firstName, lastName, phoneNumber } = call;
                 const contactData = {
@@ -74,11 +63,13 @@ class ContactsWidget {
         </article>`;
     }
 
-    formatTimestamp(timestamp) {
-        return {
-            dateTime: moment.unix(timestamp).format("MMM Do, YYYY"), // 'Aug 8, 2018',
-            timeago: moment.unix(timestamp).fromNow() //'2 day ago'
-        }
+    render(contacts) {
+        this.root.innerHTML = '';
+        contacts.forEach(contact => {
+            const dateObj = formatTimestamp(contact.lastCalled);
+            this.root.innerHTML += this.getRowHTML(contact, dateObj);
+        });
+        this.addRowEvents();
     }
 }
 
