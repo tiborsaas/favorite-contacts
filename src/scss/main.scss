@@ -6,6 +6,7 @@
 body {
     background: fff;
     font-family: Arial, Helvetica, sans-serif;
+    padding-top: 6rem;
 }
 
 header {
@@ -14,7 +15,14 @@ header {
     padding: 1rem;
     font-size: 1.4rem;
     color: #fff;
-    margin-bottom: 2rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+main {
+    margin-bottom: 6rem;
 }
 
 section {
@@ -86,6 +94,11 @@ section {
                 padding: .5rem;
                 font-size: .9rem;
                 margin-top: .5rem;
+
+                em {
+                    float: right;
+                    color: #666;
+                }
             }
         }
     }
